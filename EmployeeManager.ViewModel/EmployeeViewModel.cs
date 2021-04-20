@@ -1,5 +1,6 @@
 ﻿using EmployeeManager.Common.DataProvider;
 using EmployeeManager.Common.Model;
+using EmployeeManager.ViewModel.Command;
 using System;
 using System.ComponentModel;
 
@@ -10,11 +11,14 @@ namespace EmployeeManager.ViewModel
         private readonly Employee _employee;
         private readonly IEmployeeDataProvider _employeeDataProvider;
 
-        public EmployeeViewModel(Employee _employee, IEmployeeDataProvider _employeeDataProvider)
+        public EmployeeViewModel(Employee employee, IEmployeeDataProvider employeeDataProvider)
         {
-            this._employee = _employee;
-            this._employeeDataProvider = _employeeDataProvider;
+            _employee = employee;
+            _employeeDataProvider = employeeDataProvider;
+            SaveCommand = new DelegateCommand(Save, () => CanSave);
         }
+
+        public DelegateCommand SaveCommand { get; }
 
         public string FirstName
         {
@@ -26,6 +30,7 @@ namespace EmployeeManager.ViewModel
                     _employee.FirstName = value;
                     RaisePropertyChanged();
                     RaisePropertyChanged(nameof(CanSave));
+                    SaveCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -33,6 +38,19 @@ namespace EmployeeManager.ViewModel
         public DateTimeOffset EntryDate
         {
             get => _employee.EntryDate;
+            set
+            {
+                if (_employee.EntryDate != value)
+                {
+                    _employee.EntryDate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public DateTime EntryDateTime
+        {
+            get => _employee.EntryDate.DateTime;
             set
             {
                 if (_employee.EntryDate != value)

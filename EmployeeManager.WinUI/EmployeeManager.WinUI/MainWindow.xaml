@@ -56,9 +56,12 @@
                       SelectedValue="{x:Bind ViewModel.SelectedEmployee.JobRoleId,Mode=TwoWay}" />
             <CheckBox Grid.Row="3" Content="Is coffee drinker" Margin="10"
                       IsChecked="{x:Bind ViewModel.SelectedEmployee.IsCoffeeDrinker,Mode=TwoWay}" />
-            <Button Grid.Row="4" Content="Save" Margin="10 10 10 30"
+            <!--<Button Grid.Row="4" Content="Save" Margin="10 10 10 30"
                     IsEnabled="{x:Bind ViewModel.SelectedEmployee.CanSave,Mode=OneWay}"
                     Click="{x:Bind ViewModel.SelectedEmployee.Save}"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left" />-->
+            <Button Grid.Row="4" Content="Save" Margin="10 10 10 30"
+                    Command="{x:Bind ViewModel.SelectedEmployee.SaveCommand,Mode=OneWay}"
                     VerticalAlignment="Bottom" HorizontalAlignment="Left" />
         </Grid>
     </Grid>
